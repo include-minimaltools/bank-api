@@ -1,0 +1,3 @@
+namespace BankApi.Application.Queries.GetTransactionsByBankAccount;
+
+public record GetTransactionsByBankAccountCommand(long BankAccountId);

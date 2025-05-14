@@ -1,6 +1,4 @@
 using AutoMapper;
-using BankApi.Application.Commands.CreateBankAccount;
-using BankApi.Application.Commands.CreateDeposit;
 using BankApi.Application.DTOs;
 using BankApi.Domain.Entities;
 using BankApi.Domain.Interfaces;

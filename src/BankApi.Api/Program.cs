@@ -2,8 +2,9 @@ using System.Numerics;
 using BankApi.Api.Middleware;
 using BankApi.Api.Utils;
 using BankApi.Application.Commands.CreateBankAccount;
-using BankApi.Application.Commands.CreateDeposit;
+using BankApi.Application.Commands.CreateTransaction;
 using BankApi.Application.Queries.GetBankAccountByCustomer;
+using BankApi.Application.Queries.GetTransactionsByBankAccount;
 using BankApi.Application.Services;
 using BankApi.Domain.Entities;
 using BankApi.Domain.Interfaces;
@@ -47,8 +48,9 @@ builder.Services.AddScoped<ICustomerService, CustomerService>();
 
 
 builder.Services.AddScoped<CreateBankAccountUseCaseHandler>();
-builder.Services.AddScoped<CreateDepositUseCaseHandler>();
+builder.Services.AddScoped<CreateTransactionUseCaseHandler>();
 builder.Services.AddScoped<GetBankAccountByCustomerHandler>();
+builder.Services.AddScoped<GetTransactionsByBankAccountHandler>();
 
 builder.Services.AddTransient<GlobalExceptionHandler>();
 
