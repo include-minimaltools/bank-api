@@ -38,7 +38,7 @@ public class CreateTransactionUseCaseHandlerTests
         var account = new BankAccount { Id = 1, Balance = 1000 };
         var request = new CreateTransactionUseCaseCommand
         {
-            BankAccountId = 1,
+            Id = 1,
             TransactionType = "D",
             Amount = 500
         };
@@ -62,7 +62,7 @@ public class CreateTransactionUseCaseHandlerTests
         var account = new BankAccount { Id = 1, Balance = 1000 };
         var request = new CreateTransactionUseCaseCommand
         {
-            BankAccountId = 1,
+            Id = 1,
             TransactionType = "W",
             Amount = 400
         };
@@ -85,7 +85,7 @@ public class CreateTransactionUseCaseHandlerTests
     {
         var request = new CreateTransactionUseCaseCommand
         {
-            BankAccountId = 99,
+            Id = 99,
             TransactionType = "D",
             Amount = 500
         };
@@ -104,7 +104,7 @@ public class CreateTransactionUseCaseHandlerTests
         var account = new BankAccount { Id = 1, Balance = 500 };
         var request = new CreateTransactionUseCaseCommand
         {
-            BankAccountId = 1,
+            Id = 1,
             TransactionType = "D",
             Amount = -50
         };
@@ -125,7 +125,7 @@ public class CreateTransactionUseCaseHandlerTests
         var account = new BankAccount { Id = 1, Balance = 100 };
         var request = new CreateTransactionUseCaseCommand
         {
-            BankAccountId = 1,
+            Id = 1,
             TransactionType = "W",
             Amount = 200
         };

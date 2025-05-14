@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using BankApi.Api.Extensions;
 using BankApi.Api.Shared;
+using BankApi.Application.Commands.ApplyInterest;
 using BankApi.Application.Commands.CreateBankAccount;
 using BankApi.Application.Commands.CreateTransaction;
 using BankApi.Application.DTOs;
@@ -27,11 +28,13 @@ public class BankAccountController(ILogger<BankAccountController> logger, IMappe
     }
 
     [HttpPost("{id}/Transaction")]
-    public async Task<IActionResult> CreateTransaction(long id, BankTransactionRequestDto dto, [FromServices] CreateTransactionUseCaseHandler handler)
+    public async Task<IActionResult> CreateTransaction(long id, BankTransactionRequestDto dto, [FromServices] CreateTransactionUseCaseHandler handler, [FromServices] ApplyInterestUseCaseHandler applyInterestUseCaseHandler)
     {
+        await applyInterestUseCaseHandler.HandleAsync(new(id));
+
         var command = _mapper.Map<CreateTransactionUseCaseCommand>(dto);
 
-        command.BankAccountId = id;
+        command.Id = id;
 
         var result = await handler.HandleAsync(command, HttpContext.RequestAborted);
 

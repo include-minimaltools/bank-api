@@ -1,6 +1,7 @@
 using System.Numerics;
 using BankApi.Api.Middleware;
 using BankApi.Api.Utils;
+using BankApi.Application.Commands.ApplyInterest;
 using BankApi.Application.Commands.CreateBankAccount;
 using BankApi.Application.Commands.CreateTransaction;
 using BankApi.Application.Queries.GetBankAccountByCustomer;
@@ -10,6 +11,7 @@ using BankApi.Domain.Entities;
 using BankApi.Domain.Interfaces;
 using BankApi.Domain.Interfaces.Repositories;
 using BankApi.Infrastructure.Contexts;
+using BankApi.Infrastructure.Data;
 using BankApi.Infrastructure.Repository;
 using BankApi.Infrastructure.Shared;
 using BankApi.Infrastructure.Utils;
@@ -38,7 +40,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-builder.Services.AddScoped<IIdGenerator, SnowflakeIdGenerator>();
+builder.Services.AddTransient<IIdGenerator, SnowflakeIdGenerator>();
 
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<IBankAccountRepository, BankAccountRepository>();
@@ -51,6 +53,7 @@ builder.Services.AddScoped<CreateBankAccountUseCaseHandler>();
 builder.Services.AddScoped<CreateTransactionUseCaseHandler>();
 builder.Services.AddScoped<GetBankAccountByCustomerHandler>();
 builder.Services.AddScoped<GetTransactionsByBankAccountHandler>();
+builder.Services.AddScoped<ApplyInterestUseCaseHandler>();
 
 builder.Services.AddTransient<GlobalExceptionHandler>();
 

@@ -4,7 +4,7 @@ namespace BankApi.Application.Commands.CreateTransaction;
 
 public class CreateTransactionUseCaseCommand
 {
-    public long BankAccountId { get; set; }
+    public long Id { get; set; }
 
     public decimal Amount { get; set; }
 

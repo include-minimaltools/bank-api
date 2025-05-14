@@ -3,6 +3,8 @@ using BankApi.Domain.Interfaces;
 using BankApi.Domain.Interfaces.Repositories;
 using BankApi.Infrastructure.Contexts;
 
+namespace BankApi.Infrastructure.Data;
+
 public class UnitOfWork(ICustomerRepository customerRepository, IBankAccountRepository bankAccountRepository, IBankTransactionRepository bankTransactionRepository, BankApiContext context) : IUnitOfWork
 {
     public ICustomerRepository CustomerRepository => customerRepository;

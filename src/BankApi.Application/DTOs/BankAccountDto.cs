@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace BankApi.Application.DTOs;
 
 public class BaseBankAccountDto
@@ -6,6 +8,7 @@ public class BaseBankAccountDto
 
     public decimal InteresRate { get; set; }
 
+    [RegularExpression("M|Y", ErrorMessage = "El tipo de interes debe ser M para mensual o Y para anual")]
     public string InterestType { get; set; } = null!;
 }
 

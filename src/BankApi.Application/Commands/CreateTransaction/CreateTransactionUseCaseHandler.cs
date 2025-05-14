@@ -12,7 +12,7 @@ public class CreateTransactionUseCaseHandler(IUnitOfWork unitOfWork, IIdGenerato
 
     public async Task<Result<long>> HandleAsync(CreateTransactionUseCaseCommand request, CancellationToken cancellationToken = default)
     {
-        BankAccount? account = await _unitOfWork.BankAccountRepository.GetByIdAsync(request.BankAccountId, cancellationToken);
+        BankAccount? account = await _unitOfWork.BankAccountRepository.GetByIdOrAccountNumberAsync(request.Id, cancellationToken);
 
         if (account is null)
             return Result<long>.NotFound("La cuenta a la que desea depositar no existe");
