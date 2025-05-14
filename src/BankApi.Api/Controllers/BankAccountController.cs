@@ -34,7 +34,7 @@ public class BankAccountController(ILogger<BankAccountController> logger, IMappe
 
         var command = _mapper.Map<CreateTransactionUseCaseCommand>(dto);
 
-        command.Id = id;
+        command.BankAccountId = id;
 
         var result = await handler.HandleAsync(command, HttpContext.RequestAborted);
 

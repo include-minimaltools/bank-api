@@ -34,16 +34,15 @@ public class CreateTransactionUseCaseHandlerTests
     [Fact]
     public async Task HandleAsync_Should_Deposit_Amount_When_Type_Is_D()
     {
-        // Arrange
         var account = new BankAccount { Id = 1, Balance = 1000 };
         var request = new CreateTransactionUseCaseCommand
         {
-            Id = 1,
+            BankAccountId = 1,
             TransactionType = "D",
             Amount = 500
         };
 
-        _repoMock.Setup(r => r.GetByIdAsync(1, It.IsAny<CancellationToken>()))
+        _repoMock.Setup(r => r.GetByIdOrAccountNumberAsync(1, It.IsAny<CancellationToken>()))
                  .ReturnsAsync(account);
         _idGenMock.Setup(g => g.NewId()).Returns(99L);
 
@@ -62,12 +61,12 @@ public class CreateTransactionUseCaseHandlerTests
         var account = new BankAccount { Id = 1, Balance = 1000 };
         var request = new CreateTransactionUseCaseCommand
         {
-            Id = 1,
+            BankAccountId = 1,
             TransactionType = "W",
             Amount = 400
         };
 
-        _repoMock.Setup(r => r.GetByIdAsync(1, It.IsAny<CancellationToken>()))
+        _repoMock.Setup(r => r.GetByIdOrAccountNumberAsync(1, It.IsAny<CancellationToken>()))
                  .ReturnsAsync(account);
         _idGenMock.Setup(g => g.NewId()).Returns(55L);
 
@@ -85,12 +84,12 @@ public class CreateTransactionUseCaseHandlerTests
     {
         var request = new CreateTransactionUseCaseCommand
         {
-            Id = 99,
+            BankAccountId = 99,
             TransactionType = "D",
             Amount = 500
         };
 
-        _repoMock.Setup(r => r.GetByIdAsync(It.IsAny<long>(), It.IsAny<CancellationToken>()))
+        _repoMock.Setup(r => r.GetByIdOrAccountNumberAsync(It.IsAny<long>(), It.IsAny<CancellationToken>()))
                  .ReturnsAsync((BankAccount?)null);
 
         var result = await _handler.HandleAsync(request);
@@ -104,12 +103,12 @@ public class CreateTransactionUseCaseHandlerTests
         var account = new BankAccount { Id = 1, Balance = 500 };
         var request = new CreateTransactionUseCaseCommand
         {
-            Id = 1,
+            BankAccountId = 1,
             TransactionType = "D",
             Amount = -50
         };
 
-        _repoMock.Setup(r => r.GetByIdAsync(1, It.IsAny<CancellationToken>()))
+        _repoMock.Setup(r => r.GetByIdOrAccountNumberAsync(1, It.IsAny<CancellationToken>()))
                  .ReturnsAsync(account);
 
         var result = await _handler.HandleAsync(request);
@@ -125,12 +124,12 @@ public class CreateTransactionUseCaseHandlerTests
         var account = new BankAccount { Id = 1, Balance = 100 };
         var request = new CreateTransactionUseCaseCommand
         {
-            Id = 1,
+            BankAccountId = 1,
             TransactionType = "W",
             Amount = 200
         };
 
-        _repoMock.Setup(r => r.GetByIdAsync(1, It.IsAny<CancellationToken>()))
+        _repoMock.Setup(r => r.GetByIdOrAccountNumberAsync(1, It.IsAny<CancellationToken>()))
                  .ReturnsAsync(account);
 
         var result = await _handler.HandleAsync(request);
