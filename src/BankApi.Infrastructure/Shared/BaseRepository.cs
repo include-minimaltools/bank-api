@@ -4,9 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BankApi.Infrastructure.Shared;
 
-public abstract class BaseRepository<T>(DbContext context) : IBaseRepository<T> where T : class
+public abstract class BaseRepository<T>(DbContext context) : BaseRepository<T, DbContext>(context) where T : class;
+
+public abstract class BaseRepository<T, TContext>(TContext context) : IBaseRepository<T>
+    where T : class
+    where TContext : DbContext
 {
-    protected readonly DbContext _context = context;
+    protected readonly TContext _context = context;
     protected readonly DbSet<T> _set = context.Set<T>();
 
     public virtual async Task<T?> GetByIdAsync(long id, CancellationToken cancellationToken = default)

@@ -1,10 +1,21 @@
+using System.Numerics;
+using BankApi.Api.Middleware;
+using BankApi.Api.Utils;
+using BankApi.Application.Commands.CreateBankAccount;
+using BankApi.Application.Commands.CreateDeposit;
+using BankApi.Application.Queries.GetBankAccountByCustomer;
+using BankApi.Application.Services;
 using BankApi.Domain.Entities;
 using BankApi.Domain.Interfaces;
+using BankApi.Domain.Interfaces.Repositories;
 using BankApi.Infrastructure.Contexts;
 using BankApi.Infrastructure.Repository;
 using BankApi.Infrastructure.Shared;
+using BankApi.Infrastructure.Utils;
 using IdGen.DependencyInjection;
+using Microsoft.AspNetCore.Http.Json;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,16 +26,36 @@ builder.Services.AddIdGen(seed);
 builder.Services.AddDbContext<BankApiContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.Converters.Add(new LongToStringConverter());
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IBaseRepository<Customer>, CustomerRepository>();
-builder.Services.AddScoped<IBaseRepository<BankAccount>, BankAccountRepository>();
-builder.Services.AddScoped<IBaseRepository<BankTransaction>, BankTransactionRepository>();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddScoped<IIdGenerator, SnowflakeIdGenerator>();
+
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<IBankAccountRepository, BankAccountRepository>();
+builder.Services.AddScoped<IBankTransactionRepository, BankTransactionRepository>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+
+
+builder.Services.AddScoped<CreateBankAccountUseCaseHandler>();
+builder.Services.AddScoped<CreateDepositUseCaseHandler>();
+builder.Services.AddScoped<GetBankAccountByCustomerHandler>();
+
+builder.Services.AddTransient<GlobalExceptionHandler>();
+
 
 var app = builder.Build();
+
+app.UseMiddleware<GlobalExceptionHandler>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

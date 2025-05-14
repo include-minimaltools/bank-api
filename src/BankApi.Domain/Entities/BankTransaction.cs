@@ -12,6 +12,8 @@ public partial class BankTransaction
 
     public string TransactionType { get; set; } = null!;
 
+    public decimal Amount { get; set; }
+
     public string? Description { get; set; }
 
     public DateTime CreatedAt { get; set; }

@@ -12,7 +12,7 @@ public partial class BankAccount
 
     public decimal Balance { get; set; }
 
-    public int AccountNumber { get; set; }
+    public long AccountNumber { get; set; }
 
     public decimal InteresRate { get; set; }
 

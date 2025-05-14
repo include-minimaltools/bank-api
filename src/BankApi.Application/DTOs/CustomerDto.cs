@@ -1,13 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using BankApi.Domain.Entities;
 
-namespace BankApi.Domain.Entities;
+namespace BankApi.Application.DTOs;
 
-public partial class Customer
+public class BaseCustomerDto
 {
-    public long Id { get; set; }
-
     public string FirstName { get; set; } = null!;
 
     public string LastName { get; set; } = null!;
@@ -17,10 +15,13 @@ public partial class Customer
     public string Gender { get; set; } = null!;
 
     public decimal Income { get; set; }
+}
 
-    public DateTime CreatedAt { get; set; }
+public class CustomerRequestDto : BaseCustomerDto;
 
-    public DateTime? UpdatedAt { get; set; }
-
-    public virtual ICollection<BankAccount> BankAccounts { get; set; } = new List<BankAccount>();
+public class CustomerDto : BaseCustomerDto
+{
+    public long Id { get; set; }
+    
+    public ICollection<string> BankTransactions = [];
 }
