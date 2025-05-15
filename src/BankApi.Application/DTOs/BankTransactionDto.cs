@@ -4,7 +4,7 @@ namespace BankApi.Application.DTOs;
 
 public class BaseBankTransactionDto
 {
-    [Range(0, int.MaxValue, ErrorMessage = "El monto debe ser mayor a 0")]
+    [Range(1, int.MaxValue, ErrorMessage = "El monto debe ser mayor a 0")]
     public decimal Amount { get; set; }
 
     [RegularExpression("D|W", ErrorMessage = "El tipo de transacción debe ser D para depósito o W para retiro")]

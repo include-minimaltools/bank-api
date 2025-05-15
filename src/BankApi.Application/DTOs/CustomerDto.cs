@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using BankApi.Domain.Entities;
 
 namespace BankApi.Application.DTOs;
@@ -12,8 +13,10 @@ public class BaseCustomerDto
 
     public DateTime BirthDate { get; set; }
 
+    [RegularExpression("F|M", ErrorMessage = "El genero solamente puede ser M (Masculino) o F (Femenino)")]
     public string Gender { get; set; } = null!;
 
+    [Range(1, int.MaxValue, ErrorMessage = "Debe ingresar un mayor valor a 0")]
     public decimal Income { get; set; }
 }
 
